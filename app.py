@@ -18,7 +18,6 @@ def generate():
     numbers = request.args.get('numbers', 'false').lower() == 'true'
     symbols = request.args.get('symbols', 'false').lower() == 'true'
 
-    print(f"Generating password with: length={length}, uppercase={uppercase}, numbers={numbers}, symbols={symbols}")
-
-    password = PasswordGenerator.generate_password(length, uppercase, numbers, symbols)
+    password = PasswordGenerator.generate_password(length, uppercase, numbers, symbols) # call password generation function
     return jsonify({"password": password}) # return password as JSON data
+
