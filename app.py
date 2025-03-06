@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask, request, jsonify
+from password_generator import PasswordGenerator
 
 app = Flask(__name__) # instance of Flask
 
@@ -7,4 +8,17 @@ app = Flask(__name__) # instance of Flask
 @app.route("/")
 
 def home():
-    return "Hello World! ITS MEEEEE!!!! <3"
+    return "Hello World!"
+
+@app.route("/generate", methods=["GET"])
+
+def generate():
+    length = int(request.args.get('length'))
+    uppercase = request.args.get('uppercase', 'false').lower() == 'true'
+    numbers = request.args.get('numbers', 'false').lower() == 'true'
+    symbols = request.args.get('symbols', 'false').lower() == 'true'
+
+    print(f"Generating password with: length={length}, uppercase={uppercase}, numbers={numbers}, symbols={symbols}")
+
+    password = PasswordGenerator.generate_password(length, uppercase, numbers, symbols)
+    return jsonify({"password": password}) # return password as JSON data
